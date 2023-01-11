@@ -22,7 +22,7 @@ def main():
   return redirect(url)
 
 
-@bp.route('/<int:year>/<int:month>/<int:day>', methods=['GET, POST'])
+@bp.route('/<int:year>/<int:month>/<int:day>', methods=['GET', 'POST'])
 def daily(year, month, day):
   form = AppointmentsForm()
   if form.validate_on_submit():
@@ -51,6 +51,6 @@ def daily(year, month, day):
         WHERE start_datetime BETWEEN %(day)s AND %(next_day)s
         ORDER BY
           start_datetime;
-      ''', { 'day': day, 'next_day': next_day })
+      ''', { 'day': day, 'next_day': next_day})
       rows = cur.fetchall()
       return render_template('index.html', rows=rows, form=form)
