@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+      span {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>My Calendar</h1>
+    <form method="post">
+      {{ form.csrf_token }}
+      <div>
+        {{ form.name.label }}
+        {{form.name()}}
+      </div>
+      <div>
+        {{ form.start_date.label }}
+        {{form.start_date()}}
+      </div>
+      <div>
+        {{ form.start_time.label }}
+        {{form.start_time()}}
+      </div>
+      <div>
+        {{ form.end_date.label }}
+        {{ form.end_date() }}
+        {% if form.end_date.errors %}
+          {% for error in form.end_date.errors %}
+          {% if error != 'This field is required.' %}
+          <span>* {{ error }}</span>
+          {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.end_time.label }}
+        {{form.end_time()}}
+      </div>
+      <div>
+        {{ form.description.label }}
+        {{form.description()}}
+      </div>
+      <div>{{form.submit()}}</div>
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Start</th>
+          <th>End</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for id, name, start, end in rows%}
+        <tr>
+          <td>{{name}}</td>
+          <td>{{start.strftime('%m/%d, %I:%m %p')}}</td>
+          <td>{{end.strftime('%m/%d, %I:%m %p')}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+
+</html>
